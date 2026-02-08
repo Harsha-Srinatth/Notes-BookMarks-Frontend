@@ -7,19 +7,27 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    // Wait for router to be ready
+    if (!router.isReady) {
+      return;
+    }
+
+    setIsReady(true);
     const token = localStorage.getItem('token');
     const publicPaths = ['/login', '/register'];
     const isPublicPath = publicPaths.includes(router.pathname);
 
     if (token) {
       setIsAuthenticated(true);
-    } else if (!isPublicPath) {
-      router.push('/login');
+    } else if (!isPublicPath && router.pathname !== '/') {
+      // Only redirect if not already on a public path or home
+      router.replace('/login');
     }
     setLoading(false);
-  }, [router]);
+  }, [router.isReady, router.pathname]);
 
   const pageVariants = {
     initial: {
@@ -46,7 +54,7 @@ export default function App({ Component, pageProps }) {
     }
   };
 
-  if (loading) {
+  if (loading || !isReady) {
     return (
       <motion.div
         className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-primary-100"

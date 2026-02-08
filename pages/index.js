@@ -5,13 +5,18 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
+    // Wait for router to be ready before redirecting
+    if (!router.isReady) {
+      return;
+    }
+
     const token = localStorage.getItem('token');
     if (token) {
-      router.push('/notes');
+      router.replace('/notes');
     } else {
-      router.push('/login');
+      router.replace('/login');
     }
-  }, [router]);
+  }, [router.isReady]);
 
   return null;
 }
