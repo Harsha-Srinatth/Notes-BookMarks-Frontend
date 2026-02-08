@@ -5,7 +5,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    // Wait for router to be ready before redirecting
+    // Wait for router to be ready before checking authentication
     if (!router.isReady) {
       return;
     }
