@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -13,6 +13,18 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    // Prevent router navigation conflicts
+    if (router.isReady) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        router.replace('/notes').catch(() => {});
+      }
+    }
+  }, [router.isReady]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,6 +98,15 @@ export default function Register() {
     { icon: '⭐', title: 'Favorites', desc: 'Mark important items as favorites' },
     { icon: '🔍', title: 'Smart Search', desc: 'Find what you need quickly' },
   ];
+
+  // Prevent hydration issues
+  if (!mounted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="loading-spinner" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 py-12 px-4">
