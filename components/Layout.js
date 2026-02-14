@@ -43,24 +43,25 @@ export default function Layout({ children }) {
             <div className="flex items-center">
               <Link href="/notes">
                 <motion.div
-                  className="flex items-center gap-2 px-3 py-2 text-xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent"
+                  className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-base sm:text-xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <motion.span
-                    className="text-2xl"
+                    className="text-xl sm:text-2xl"
                     animate={{ rotate: [0, 10, -10, 0] }}
                     transition={{ duration: 2, repeat: Infinity, repeatDelay: 5 }}
                   >
                     📚
                   </motion.span>
-                  <span>Notes & Bookmarks</span>
+                  <span className="hidden sm:inline">Notes & Bookmarks</span>
+                  <span className="sm:hidden">N&B</span>
                 </motion.div>
               </Link>
-              <div className="hidden sm:ml-8 sm:flex sm:space-x-1">
+              <div className="ml-2 sm:ml-8 flex space-x-1">
                 <Link href="/notes">
                   <motion.div
-                    className={`inline-flex items-center px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                    className={`inline-flex items-center px-2 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
                       router.pathname === '/notes'
                         ? 'bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 shadow-sm'
                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
@@ -68,12 +69,13 @@ export default function Layout({ children }) {
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    📝 Notes
+                    <span className="hidden sm:inline">📝 </span>
+                    <span>Notes</span>
                   </motion.div>
                 </Link>
                 <Link href="/bookmarks">
                   <motion.div
-                    className={`inline-flex items-center px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                    className={`inline-flex items-center px-2 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
                       router.pathname === '/bookmarks'
                         ? 'bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 shadow-sm'
                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
@@ -81,7 +83,8 @@ export default function Layout({ children }) {
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    🔖 Bookmarks
+                    <span className="hidden sm:inline">🔖 </span>
+                    <span>Bookmarks</span>
                   </motion.div>
                 </Link>
               </div>
